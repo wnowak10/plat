@@ -41,6 +41,25 @@ train_label, valid_label, test_label = train_label.values, valid_label.values, t
 train, valid, test = train.values, valid.values, test.values
 
 
+
+
+# imput and rescale features
+from sklearn import preprocessing
+from sklearn.preprocessing import Imputer
+
+imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
+fittx=imp.fit(train)
+fity=imp.fit(valid)
+fitz = imp.fit(test)
+
+train, valid, test =imp.transform(train), imp.transform(valid) , imp.transform(test)
+
+# train, valid, test = preprocessing.scale(train), preprocessing.scale(valid), preprocessing.scale(test)
+
+
+
+
+
 # reshape for keras LSTM
 #need  [samples, time steps, features]. 
 # Currently, our data is in the form: [samples, features] 
@@ -48,3 +67,4 @@ train, valid, test = train.values, valid.values, test.values
 train = np.reshape(train, (train.shape[0], train.shape[1],1))
 valid = np.reshape(valid, (valid.shape[0], valid.shape[1],1))
 test = np.reshape(test, (test.shape[0], test.shape[1],1))
+
