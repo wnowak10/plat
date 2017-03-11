@@ -4,34 +4,36 @@
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
-from keras.optimizers import Adam
+from keras.optimizers import Adam, SGD
 # get cleaned training data from clean.py
 from clean import train, train_label
 from clean import valid, valid_label
 import matplotlib.pyplot as plt
 
 
-# print(train_label.shape)
 num_features=3
 
 model = Sequential()
-model.add(LSTM(1,input_shape=[num_features,1]))
+model.add(LSTM(20,input_shape=[num_features,1]))
 # model.add(LSTM(16,input_dim=1))
 
 model.add(Dense(2))
 model.add(Activation('softmax'))
-adam=Adam()
+op=SGD()
 model.compile(	loss='categorical_crossentropy',
-				optimizer=adam)
+				optimizer=op,
+				metrics=["accuracy"]
+				)
 
 
 h=model.fit(train,
 			train_label,
 			batch_size=100,
-			nb_epoch=10,
+			nb_epoch=50,
 			verbose=1)
 
-model.predict_classes(train)
+# model.predict_classes(train)
 
-# plt.plot(h['acc'])
-# plt.show()
+# plot accuracy over training epochs
+plt.plot(h.history['acc'])
+plt.show()

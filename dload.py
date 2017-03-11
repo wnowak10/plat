@@ -18,10 +18,10 @@ features.columns=['tif_stock','sp_500','plat']
 # drop missing platinum values
 features=features.dropna(axis=0,subset=['plat'])
 # create target..for today, we have yesterday minute today
-target = features.plat.shift(-1)-features.plat
+movement = features.plat.shift(-1)-features.plat
 
 # compile into one df for kicks
-all_data=pd.concat([features,target],axis=1)
+all_data=pd.concat([features,movement],axis=1)
 all_data.columns=['tif_stock','sp_500','plat_today','movement']
 all_data['gain_loss'] = [1 if x>0 else 0 for x in all_data['movement']]
 # remove most current row, because we dont know what tomorrow's
