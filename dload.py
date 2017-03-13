@@ -6,12 +6,11 @@ from key import auth_key
 
 #### LOAD FINANCE DATA ####
 
-start="2010-1-1"
+start="2015-1-1"
 end="2017-1-1"
 plat = quandl.get("LPPM/PLAT", start_date=start, end_date=end,authtoken=auth_key)['USD AM']
 sp= quandl.get("YAHOO/INDEX_GSPC", start_date=start, end_date=end,authtoken=auth_key)['Adjusted Close']
 tif  = quandl.get("WIKI/TIF", start_date=start, end_date=end,authtoken=auth_key)['Adj. Close']
-
 
 features = pd.concat([tif, sp,plat], axis=1)
 features.columns=['tif_stock','sp_500','plat']
