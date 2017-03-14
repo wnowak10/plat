@@ -7,6 +7,8 @@ from keras.layers.recurrent import LSTM
 from keras.optimizers import Adam, SGD
 # get cleaned training data from clean.py
 from clean import train, train_label
+from clean import test, test_label
+
 # from clean import valid, valid_label
 import matplotlib.pyplot as plt
 from keras.callbacks import EarlyStopping
@@ -34,7 +36,7 @@ model.compile(	loss='categorical_crossentropy',
 h=model.fit(train,
 			train_label,
 			batch_size=100,
-			nb_epoch=50,
+			nb_epoch=5,
 			validation_split=.2,
 			verbose=1,
 			# callbacks=early_stop
@@ -51,3 +53,6 @@ plt.xlabel('epoch')
 plt.legend(['train', 'validation'], loc='upper left')
 
 plt.show()
+
+print(model.predict(test))
+# test_label

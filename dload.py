@@ -6,7 +6,7 @@ from key import auth_key
 
 #### LOAD FINANCE DATA ####
 
-start="2000-1-1"
+start="2006-1-1"
 end="2017-1-1"
 
 # API calls to quandl
