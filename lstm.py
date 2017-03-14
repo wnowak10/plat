@@ -9,9 +9,10 @@ from keras.optimizers import Adam, SGD
 from clean import train, train_label
 # from clean import valid, valid_label
 import matplotlib.pyplot as plt
+from keras.callbacks import EarlyStopping
 
 
-num_features=3
+num_features=train.shape[1]
 
 model = Sequential()
 model.add(LSTM(200,input_shape=[num_features,1]))
@@ -25,13 +26,19 @@ model.compile(	loss='categorical_crossentropy',
 				metrics=["accuracy"]
 				)
 
+# early_stop=[EarlyStopping(	monitor='val_loss', 
+#             				patience=3, 
+#             				verbose=0)
+# 			]
 
 h=model.fit(train,
 			train_label,
 			batch_size=100,
-			nb_epoch=1000,
+			nb_epoch=50,
 			validation_split=.2,
-			verbose=1)
+			verbose=1,
+			# callbacks=early_stop
+			)
 
 # model.predict_classes(train)
 
