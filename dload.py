@@ -33,11 +33,14 @@ features.columns=fin_names
 # drop missing platinum values
 features=features.dropna(axis=0,subset=['plat'])
 
-# create target variable...for today, we have yesterday minus today
-features['movement'] = features.plat.shift(-1)-features.plat
+# create target variable...for today, we have 30 days ago minus today
+# features['movement'] = features.plat.shift(-1)-features.plat # this compares daily change
+features['movement'] = features.plat.shift(-30)-features.plat
 # create gain_loss -- predict next day's gain or loss
-features['gain_loss'] = [1 if x>0 else 0 for x in all_data['movement']]
+features['gain_loss'] = [1 if x>0 else 0 for x in features['movement']]
 
 # remove most current row, because we dont know what tomorrow's
 	# plat price will be...so let's get rid of this
 features=features[:-1:]
+
+all_data=features

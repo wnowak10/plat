@@ -11,7 +11,7 @@ from clean import train, train_label
 import matplotlib.pyplot as plt
 
 
-num_features=3
+num_features=train.shape[1]
 
 model = Sequential()
 model.add(LSTM(200,input_shape=[num_features,1]))
@@ -29,7 +29,7 @@ model.compile(	loss='categorical_crossentropy',
 h=model.fit(train,
 			train_label,
 			batch_size=100,
-			nb_epoch=1000,
+			nb_epoch=10,
 			validation_split=.2,
 			verbose=1)
 
